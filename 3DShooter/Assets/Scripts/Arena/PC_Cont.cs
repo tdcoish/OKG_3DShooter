@@ -8,6 +8,7 @@ public class PC_Cont : MonoBehaviour
     private Rigidbody                   cRigid;
     private PC_Cam                      cCam;
     private PC_Gun                      cGun;
+    private PC_Grnd                     cGrnd;
     private PC_Shields                  cShields;
 
     public UI_PC                        rUI;
@@ -22,6 +23,7 @@ public class PC_Cont : MonoBehaviour
         cRigid = GetComponent<Rigidbody>();
         cCam = GetComponentInChildren<PC_Cam>();
         cGun = GetComponent<PC_Gun>();
+        cGrnd = GetComponent<PC_Grnd>();
         cShields = GetComponent<PC_Shields>();
 
         _health = _maxHealth;
@@ -32,6 +34,7 @@ public class PC_Cont : MonoBehaviour
         HandleMouseRotations();
 
         cGun.FRun();
+        cGrnd.FRun();
 
         CheckAndHandleDeath();
         rUI.fSetHealthBarSize(_health, _maxHealth);
