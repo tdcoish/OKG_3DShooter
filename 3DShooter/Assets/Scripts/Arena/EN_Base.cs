@@ -47,7 +47,7 @@ public class EN_Base : MonoBehaviour
         }
 
         TDC_EventManager.FBroadcast(TDC_GE.GE_EDeath);
-
+        Debug.Log("Killing");
         Destroy(gameObject);
     }
 }
