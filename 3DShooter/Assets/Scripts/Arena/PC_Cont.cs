@@ -1,5 +1,5 @@
 ﻿/*************************************************************************************
-
+Give em a gun.
 *************************************************************************************/
 using UnityEngine;
 
@@ -7,15 +7,16 @@ public class PC_Cont : MonoBehaviour
 {
     private Rigidbody                   cRigid;
     private PC_Cam                      cCam;
+    private PC_Gun                      cGun;
 
     public float                        _accRate = 100f;
     public float                        _maxSpd = 10f;
-
 
     void Start()
     {
         cRigid = GetComponent<Rigidbody>();
         cCam = GetComponentInChildren<PC_Cam>();
+        cGun = GetComponent<PC_Gun>();
     }
 
     void Update()
@@ -30,11 +31,13 @@ public class PC_Cont : MonoBehaviour
         Vector3 xAx = Vector3.Cross(transform.forward, Vector3.up);
         cCam.transform.RotateAround(transform.position, xAx, mouseY);
 
+        cGun.FRun();
     }
 
     void FixedUpdate()
     {
         cRigid.velocity = FindVelFromInput(cRigid.velocity);
+        // cRigid.velocity = FindVelFromJumpingInput(cRigid.velocity);
     }
 
     private Vector3 FindVelFromInput(Vector3 vCurSpd)
@@ -86,5 +89,17 @@ public class PC_Cont : MonoBehaviour
         }
 
         return vVel;
+    }
+
+    private Vector3 FindVelFromJumpingInput(Vector3 vCurVel)
+    {
+        // Actually need to test if they're on the ground.
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            vCurVel.y += 20f;
+            return vCurVel;
+        }else{
+            return vCurVel;
+        }
     }
 }
