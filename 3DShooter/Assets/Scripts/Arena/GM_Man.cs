@@ -15,6 +15,8 @@ public class GM_Man : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;    
+
+        _lastSpawnTime = _spawnInterval * -1f;
     }
 
     void Update()

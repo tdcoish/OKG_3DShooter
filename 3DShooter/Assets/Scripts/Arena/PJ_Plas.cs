@@ -12,4 +12,13 @@ public class PJ_Plas : PJ_Base
             Destroy(gameObject);
         }       
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+
+        if(other.gameObject.GetComponent<EN_Rusher>()){
+            Destroy(gameObject);
+        }
+
+    }
 }

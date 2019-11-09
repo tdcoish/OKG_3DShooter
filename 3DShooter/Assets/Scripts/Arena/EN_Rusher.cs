@@ -45,7 +45,8 @@ public class EN_Rusher : EN_Base
     }
     private void RUN_TRACKING()
     {
-        Vector2 vDif = rPC.transform.position - transform.position;
+        Vector3 vDif = rPC.transform.position - transform.position;
+        vDif.y = 0f;
         vDif = Vector3.Normalize(vDif);
         cRigid.velocity = vDif * _spd;
 
@@ -75,5 +76,16 @@ public class EN_Rusher : EN_Base
         if(Time.time - _recoveryStartTime > _recoveryTime){
             ENTER_TRACKING();
         }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.GetComponent<EN_Rusher>()){
+            _health = 0f;
+        }
+        if(other.gameObject.GetComponent<PJ_Base>()){
+            _health = 0f;
+        }
+
     }
 }
