@@ -2,6 +2,7 @@
 
 *************************************************************************************/
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GM_Man : MonoBehaviour
 {
@@ -27,6 +28,13 @@ public class GM_Man : MonoBehaviour
                 Instantiate(PF_Rusher, _spawners[i].transform.position, transform.rotation);
             }
             _lastSpawnTime = Time.time;
+        }
+
+
+        // ------------ Pause Menu Stuff
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MainMenu");
         }
     }
 }
