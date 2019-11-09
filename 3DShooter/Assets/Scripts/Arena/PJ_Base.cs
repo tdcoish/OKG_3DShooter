@@ -3,6 +3,8 @@
 *************************************************************************************/
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(UT_LifeTime))]
 public class PJ_Base : MonoBehaviour
 {
     protected Rigidbody                           cRigid;

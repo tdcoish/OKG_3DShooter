@@ -6,7 +6,7 @@ using UnityEngine;
 public class UT_LifeTime : MonoBehaviour
 {
     public bool                             _lifeOver = false;
-    public float                            _lifespan = 1f;
+    public float                            _lifespan = 10f;
     private float                           _spawnTime;
 
     void Start()
