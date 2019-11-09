@@ -35,6 +35,9 @@
     "texturesets": {
         "DefaultMaterial": {
             "shader": "Main shader"
+        },
+        "Material": {
+            "shader": "Main shader"
         }
     }
 }
