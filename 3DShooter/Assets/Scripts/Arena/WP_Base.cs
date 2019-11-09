@@ -13,7 +13,7 @@ public class WP_Base : MonoBehaviour
     public float                        _fireInterval;
     protected float                     _lastFireTime;
 
-    void Start()
+    protected virtual void Start()
     {
         _ammo = _maxAmmo;
     }

@@ -12,9 +12,10 @@ public class UI_PC : MonoBehaviour
     public Text                             _scoreText;
     public Text                             _timeText;
 
-    public void FSetBarSize(float percZeroToOne)
+    public void fSetHealthBarSize(float curHealth, float maxHealth)
     {
-        _healthBar.fillAmount = percZeroToOne;
+        float perc = curHealth/maxHealth;
+        _healthBar.fillAmount = perc;
     }
 
     public void FSetAmmoBarSize(int curAmmo, int maxAmmo)

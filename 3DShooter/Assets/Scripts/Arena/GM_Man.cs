@@ -12,10 +12,17 @@ public class GM_Man : MonoBehaviour
     public GM_EN_Spawn[]                        _spawners;
     public EN_Rusher                            PF_Rusher;
 
+    void Awake()
+    {
+        TDC_EventManager.FRemoveAllHandlers();
+    }
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;    
+        Cursor.visible = false;   
+
+        TDC_EventManager.FAddHandler(TDC_GE.GE_PCDeath, E_PlayerDied); 
 
         _lastSpawnTime = _spawnInterval * -1f;
     }
@@ -32,9 +39,14 @@ public class GM_Man : MonoBehaviour
 
 
         // ------------ Pause Menu Stuff
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.M))
         {
             SceneManager.LoadScene("MainMenu");
         }
+    }
+
+    private void E_PlayerDied()
+    {
+        SceneManager.LoadScene("Death");
     }
 }

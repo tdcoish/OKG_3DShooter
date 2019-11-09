@@ -8,18 +8,45 @@ public class PC_Cont : MonoBehaviour
     private Rigidbody                   cRigid;
     private PC_Cam                      cCam;
     private PC_Gun                      cGun;
+    private PC_Shields                  cShields;
+
+    public UI_PC                        rUI;
 
     public float                        _accRate = 100f;
     public float                        _maxSpd = 10f;
+    public float                        _maxHealth = 100f;
+    public float                        _health;
 
     void Start()
     {
         cRigid = GetComponent<Rigidbody>();
         cCam = GetComponentInChildren<PC_Cam>();
         cGun = GetComponent<PC_Gun>();
+        cShields = GetComponent<PC_Shields>();
+
+        _health = _maxHealth;
     }
 
     void Update()
+    {
+        HandleMouseRotations();
+
+        cGun.FRun();
+
+        CheckAndHandleDeath();
+        rUI.fSetHealthBarSize(_health, _maxHealth);
+        rUI.FSetShieldBarSize(cShields._val, cShields._maxVal);
+        rUI.FSetAmmoBarSize(cGun._ammo, cGun._maxAmmo);
+        rUI.FSetTimeText(Time.time);
+    }
+
+    void FixedUpdate()
+    {
+        cRigid.velocity = FindVelFromInput(cRigid.velocity);
+        // cRigid.velocity = FindVelFromJumpingInput(cRigid.velocity);
+    }
+
+    private void HandleMouseRotations()
     {
         // want to get rid of y component of the cameras rotation.
         float mouseX = Input.GetAxis("Mouse X") * 1f;
@@ -30,14 +57,6 @@ public class PC_Cont : MonoBehaviour
         transform.RotateAround(transform.position, Vector3.up, mouseX);
         Vector3 xAx = Vector3.Cross(transform.forward, Vector3.up);
         cCam.transform.RotateAround(transform.position, xAx, mouseY);
-
-        cGun.FRun();
-    }
-
-    void FixedUpdate()
-    {
-        cRigid.velocity = FindVelFromInput(cRigid.velocity);
-        // cRigid.velocity = FindVelFromJumpingInput(cRigid.velocity);
     }
 
     private Vector3 FindVelFromInput(Vector3 vCurSpd)
@@ -100,6 +119,32 @@ public class PC_Cont : MonoBehaviour
             return vCurVel;
         }else{
             return vCurVel;
+        }
+    }
+
+    private void CheckAndHandleDeath()
+    {
+        if(_health <= 0f){
+            TDC_EventManager.FBroadcast(TDC_GE.GE_PCDeath);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.GetComponent<PJ_Bolt>()){
+
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.GetComponent<PJ_Bolt>())
+        {
+            _health -= cShields.FTakeDamageGiveRemainder(60f);
+        }
+        if(other.gameObject.GetComponent<EN_Rusher>())
+        {
+            _health -= cShields.FTakeDamageGiveRemainder(80f);
         }
     }
 }
