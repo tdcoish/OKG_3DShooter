@@ -9,7 +9,6 @@ public class MN_Death : MonoBehaviour
 {
     public Text                         _txtScore;
 
-
     void Start()
     {
         _txtScore.text = "SCORE: " + 1000;
