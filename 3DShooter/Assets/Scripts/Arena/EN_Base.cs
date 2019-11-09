@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EN_Base : MonoBehaviour
 {
-    protected Rigidbody2D               cRigid;
+    protected Rigidbody               cRigid;
 
     public float                        _spd;
     protected PC_Cont                   rPC;
@@ -24,7 +24,7 @@ public class EN_Base : MonoBehaviour
  
     protected void Start()
     {
-        cRigid = GetComponent<Rigidbody2D>();
+        cRigid = GetComponent<Rigidbody>();
         rPC = FindObjectOfType<PC_Cont>();
     }
 
