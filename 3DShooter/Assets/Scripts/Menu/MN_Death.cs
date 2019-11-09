@@ -11,6 +11,8 @@ public class MN_Death : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         _txtScore.text = "SCORE: " + 1000;
     }
 

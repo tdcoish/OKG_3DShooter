@@ -86,6 +86,9 @@ public class EN_Rusher : EN_Base
         if(other.gameObject.GetComponent<PJ_Base>()){
             _health = 0f;
         }
+        if(other.gameObject.GetComponent<PC_Cont>()){
+            _health = 0f;
+        }
 
     }
 }
