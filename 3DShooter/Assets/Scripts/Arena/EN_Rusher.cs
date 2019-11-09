@@ -83,7 +83,10 @@ public class EN_Rusher : EN_Base
         if(other.gameObject.GetComponent<EN_Rusher>()){
             _health = 0f;
         }
-        if(other.gameObject.GetComponent<PJ_Base>()){
+        if(other.gameObject.GetComponent<PJ_Plas>()){
+            _health = 0f;
+        }
+        if(other.gameObject.GetComponent<EX_Gren>()){
             _health = 0f;
         }
         if(other.gameObject.GetComponent<PC_Cont>()){

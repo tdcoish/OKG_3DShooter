@@ -145,6 +145,9 @@ public class PC_Cont : MonoBehaviour
         {
             _health -= cShields.FTakeDamageGiveRemainder(60f);
         }
+        if(other.gameObject.GetComponent<EX_Gren>()){
+            _health -= cShields.FTakeDamageGiveRemainder(20f);
+        }
         if(other.gameObject.GetComponent<EN_Rusher>())
         {
             _health -= cShields.FTakeDamageGiveRemainder(80f);

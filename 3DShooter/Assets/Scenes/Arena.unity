@@ -5604,11 +5604,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EX_Grenade
       objectReference: {fileID: 0}
-    - target: {fileID: 7671400654524755421, guid: 88f861108be138a46a58c9d8ac7462a6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7671400654524755411, guid: 88f861108be138a46a58c9d8ac7462a6,
         type: 3}
       propertyPath: m_LocalPosition.x
