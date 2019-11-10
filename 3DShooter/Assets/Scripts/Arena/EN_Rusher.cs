@@ -12,6 +12,8 @@ public class EN_Rusher : EN_Base
     }
     public STATE                        _state;
 
+    private AN_Rusher                   cAnim;
+
     private float                       _chargeStartTime;
     public float                        _maxChargeDis = 2f;
     public float                        _chargeSpdBoost = 3f;
@@ -24,6 +26,7 @@ public class EN_Rusher : EN_Base
     {
         base.Start();
         _state = STATE.S_TRACKING;
+        cAnim = GetComponent<AN_Rusher>();
     }
 
     void Update()
@@ -33,6 +36,10 @@ public class EN_Rusher : EN_Base
             case STATE.S_TRACKING: RUN_TRACKING(); break;
             case STATE.S_CHARGING: RUN_CHARGING(); break;
             case STATE.S_RECOVERING: RUN_RECOVERING(); break;
+        }
+
+        if(cAnim != null){
+            cAnim.FRunAnimations();
         }
 
         if(_health <= 0f){
@@ -49,6 +56,8 @@ public class EN_Rusher : EN_Base
         vDif.y = 0f;
         vDif = Vector3.Normalize(vDif);
         cRigid.velocity = vDif * _spd;
+
+        transform.forward = cRigid.velocity.normalized;
 
         if(Vector3.Distance(transform.position, rPC.transform.position) < _maxChargeDis){
             ENTER_CHARGING();
