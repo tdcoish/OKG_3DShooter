@@ -8,6 +8,8 @@ public enum STATE_TUR {SFIRING, SCOOLDOWN}
 public class EN_Tur : EN_Base
 {
 
+    public bool                         _typePlasma = true;
+    public PJ_Needle                    PF_Needle;
     public PJ_Bolt                      PF_Bolt;
 
     private float                       _lastShot;
@@ -40,9 +42,15 @@ public class EN_Tur : EN_Base
 
         if(Time.time - _lastShot > _shotInterval)
         {
-            PJ_Bolt b = Instantiate(PF_Bolt, rFirePoint.transform.position, transform.rotation);
-            vDir = rPC.transform.position - rFirePoint.transform.position;
-            b.FFireDirection(vDir);
+            if(_typePlasma){
+                PJ_Bolt b = Instantiate(PF_Bolt, rFirePoint.transform.position, transform.rotation);
+                vDir = rPC.transform.position - rFirePoint.transform.position;
+                b.FFireDirection(vDir);
+            }else{
+                PJ_Needle n = Instantiate(PF_Needle, rFirePoint.transform.position, transform.rotation);
+                vDir = rPC.transform.position - rFirePoint.transform.position;
+            }
+            
             _lastShot = Time.time;
 
             _volleyCurShot++;

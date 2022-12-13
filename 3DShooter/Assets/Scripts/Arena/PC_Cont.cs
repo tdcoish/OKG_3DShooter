@@ -15,6 +15,8 @@ public class PC_Cont : MonoBehaviour
 
     public float                        _accRate = 100f;
     public float                        _maxSpd = 10f;
+    public float                        _sideSpd = 0.5f;
+    public float                        _backSpd = 0.25f;
     public float                        _maxHealth = 100f;
     public float                        _health;
 
@@ -62,54 +64,40 @@ public class PC_Cont : MonoBehaviour
         cCam.transform.RotateAround(transform.position, xAx, mouseY);
     }
 
+
+    /***************************************************************************************
+    The player does not move forwards, backwards, and side to side at the same speed. But we 
+    also can't let them move faster diagonally. 
+    ***************************************************************************************/
     private Vector3 FindVelFromInput(Vector3 vCurSpd)
     {
-        float fSideAcc = 0f;
-        float fForAcc = 0f;
+        Vector3 vVel = new Vector3();
+
+        bool moveForOrBack = false; bool moveSide = false;
 
         if(Input.GetKey(KeyCode.A)){
-            fSideAcc -= _accRate * Time.fixedDeltaTime;
+            vVel += transform.right * -_maxSpd * _sideSpd;
+            moveSide = true;
         }
         if(Input.GetKey(KeyCode.D)){
-            fSideAcc += _accRate * Time.fixedDeltaTime;
+            vVel += transform.right * _maxSpd * _sideSpd;
+            moveSide = true;
         }
         if(Input.GetKey(KeyCode.W)){
-            fForAcc += _accRate * Time.fixedDeltaTime;
+            vVel += transform.forward * _maxSpd;
+            moveForOrBack = true;
         }
         if(Input.GetKey(KeyCode.S)){
-            fForAcc -= _accRate * Time.fixedDeltaTime;
+            vVel += transform.forward * -_maxSpd * _backSpd;
+            moveForOrBack = true;
         }
 
-        if(Mathf.Abs(fForAcc) + Mathf.Abs(fSideAcc) > _accRate)
+        // Normalize vectors, then add them together, get dot product. Normalize, multiply by averaged magnitude.   
+        if(moveForOrBack && moveSide)
         {
-            fForAcc *= 0.707f;
-            fSideAcc *= 0.707f;
+            vVel *= 0.75f;
         }
-
-
-        Vector3 vVel = vCurSpd;
-        // basically, if we're not accelerating, then make our velocity lowered.
-        // other wise do so normally.
-        if(Mathf.Abs(fForAcc) + Mathf.Abs(fSideAcc) < 0.1f)
-        {
-            // say we'll stop over 1 second, or so.
-            vVel -= vVel * Time.fixedDeltaTime * _maxSpd;
-            // and if we go too far, then just set vel to zero.
-            if(Vector3.Dot(vVel, vCurSpd) <= 0f)
-            {
-                return Vector3.zero;
-            }
-        }
-        else
-        {
-            vVel += fForAcc * transform.forward;
-            vVel += fSideAcc * transform.right;
-        }
-        if(Vector3.Magnitude(vVel) > _maxSpd)
-        {
-            vVel *= _maxSpd / Vector3.Magnitude(vVel);
-        }
-
+        
         return vVel;
     }
 
